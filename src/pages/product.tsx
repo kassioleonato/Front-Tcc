@@ -4,7 +4,7 @@ import styles from "../styles/product.module.scss";
 import { Header } from "../components/Header/Header";
 import Image from "next/image";
 
-import { canSSRAuth } from "../utils/canSSRAuth";
+import { canSSRGuest } from "@/utils/canSSRGuest";
 import { FiUpload } from "react-icons/fi";
 
 import { setupAPIClient } from "../services/api";
@@ -161,14 +161,20 @@ export default function Product({ categoryList }: CategoryProps) {
   );
 }
 
-export const getServerSideProps = canSSRAuth(async (ctx) => {
-  const apiClient = setupAPIClient(ctx);
+// export const getServerSideProps = canSSRAuth(async (ctx) => {
+//   const apiClient = setupAPIClient(ctx);
 
-  const response = await apiClient.get("/category");
+//   const response = await apiClient.get("/category");
 
-  //console.log(response.data);
+//   //console.log(response.data);
 
+//   return {
+//     props: { categoryList: response.data },
+//   };
+// });
+
+export const getServerSideProps = canSSRGuest(async (ctx) => {
   return {
-    props: { categoryList: response.data },
+    props: {},
   };
 });

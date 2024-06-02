@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { canSSRGuest } from "../utils/canSSRGuest";
+import { canSSRAuth } from "../utils/canSSRAuth";
+import { canSSRGuest } from "@/utils/canSSRGuest";
 
 import Head from "next/head";
 import styles from "../styles/dashboard.module.scss";
@@ -133,14 +134,20 @@ export default function Dashboard({ orders }: HomeProps) {
   );
 }
 
+// export const getServerSideProps = canSSRAuth(async (ctx) => {
+//   const apiClient = setupAPIClient(ctx);
+
+//   const response = await apiClient.get("/orders");
+
+//   return {
+//     props: {
+//       orders: response.data,
+//     },
+//   };
+// });
+
 export const getServerSideProps = canSSRGuest(async (ctx) => {
-  const apiClient = setupAPIClient(ctx);
-
-  const response = await apiClient.get("/orders");
-
   return {
-    props: {
-      orders: response.data,
-    },
+    props: {},
   };
 });
